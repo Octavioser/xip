@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import {
   GALLERY_COLUMNS,
   GALLERY_IMAGES,
@@ -13,6 +19,8 @@ import styles from "./Gallery.module.scss";
 const VIMEO_XHELL_URL =
   "https://player.vimeo.com/video/1165179732?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1";
 
+const PAGE_SIZE = 20;
+
 interface CssVars extends CSSProperties {
   "--cols"?: number;
 }
@@ -22,11 +30,32 @@ export function Gallery({ galleryType }: { galleryType: GalleryType }) {
   const columns = GALLERY_COLUMNS[galleryType];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(() =>
+    Math.min(PAGE_SIZE, images.length),
+  );
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   // Reset loaded state whenever the displayed image changes
   useEffect(() => {
     setImgLoaded(false);
   }, [openIndex]);
+
+  // Progressive rendering — observe a sentinel near the bottom and grow visibleCount
+  useEffect(() => {
+    if (visibleCount >= images.length) return;
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisibleCount((c) => Math.min(c + PAGE_SIZE, images.length));
+        }
+      },
+      { rootMargin: "400px" },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [visibleCount, images.length]);
 
   const close = useCallback(() => setOpenIndex(null), []);
   const next = useCallback(() => {
@@ -75,7 +104,7 @@ export function Gallery({ galleryType }: { galleryType: GalleryType }) {
             </section>
           )}
           <div className={styles.grid} style={gridStyle}>
-            {images.map((path, i) => (
+            {images.slice(0, visibleCount).map((path, i) => (
               <div
                 key={path}
                 className={`${styles.cell} ${
@@ -93,6 +122,9 @@ export function Gallery({ galleryType }: { galleryType: GalleryType }) {
               </div>
             ))}
           </div>
+          {visibleCount < images.length && (
+            <div ref={sentinelRef} aria-hidden style={{ height: 1 }} />
+          )}
         </div>
       </div>
 
