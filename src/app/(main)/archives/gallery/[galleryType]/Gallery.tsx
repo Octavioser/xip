@@ -21,6 +21,12 @@ export function Gallery({ galleryType }: { galleryType: GalleryType }) {
   const images = GALLERY_IMAGES[galleryType];
   const columns = GALLERY_COLUMNS[galleryType];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  // Reset loaded state whenever the displayed image changes
+  useEffect(() => {
+    setImgLoaded(false);
+  }, [openIndex]);
 
   const close = useCallback(() => setOpenIndex(null), []);
   const next = useCallback(() => {
@@ -106,11 +112,22 @@ export function Gallery({ galleryType }: { galleryType: GalleryType }) {
             ◀
           </button>
           <div onClick={(e) => e.stopPropagation()}>
+            {!imgLoaded && (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                className={styles.popLoader}
+                src="/xItem/i/main/loadingLogo.gif"
+                alt="loading"
+              />
+            )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              className={styles.popImage}
+              key={images[openIndex]}
+              className={`${styles.popImage} ${imgLoaded ? styles.popImageReady : ""}`}
               src={toOriginalUrl(images[openIndex])}
               alt=""
+              onLoad={() => setImgLoaded(true)}
+              onError={() => setImgLoaded(true)}
             />
           </div>
           <button
