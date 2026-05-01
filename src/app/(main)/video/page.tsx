@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import styles from "./page.module.scss";
+
+export const metadata: Metadata = {
+  title: "Video",
+  description: "XIP video archive",
+};
 
 export default function Video() {
   return (

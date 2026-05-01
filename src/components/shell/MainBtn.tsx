@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { ImgBtn } from "@/components/common/ImgBtn";
+import { LoadingLink } from "@/components/common/LoadingLink";
 import { PBtn } from "@/components/common/PBtn";
+import { useAppContext } from "@/contexts/AppContext";
 import styles from "./MainBtn.module.scss";
 
 const MENU_LOGO = "/xItem/i/main/mainXLogo.webp";
@@ -19,6 +20,7 @@ const MENU_ITEMS = [
 export function MainBtn() {
   const pathname = usePathname();
   const router = useRouter();
+  const { setLoading } = useAppContext();
   const [menuOpen, setMenuOpen] = useState(true);
 
   if (pathname === "/") return null;
@@ -30,8 +32,7 @@ export function MainBtn() {
       setMenuOpen((v) => !v);
       return;
     }
-    // Try real back; if pathname doesn't change (no in-app history), fall back to /home.
-    // Browser-agnostic and works the same on mobile (history.length is unreliable there).
+    setLoading(true);
     const before = window.location.pathname;
     router.back();
     window.setTimeout(() => {
@@ -55,12 +56,12 @@ export function MainBtn() {
         {isHome && menuOpen && (
           <>
             {MENU_ITEMS.map((item) => (
-              <Link key={item.href} href={item.href}>
+              <LoadingLink key={item.href} href={item.href}>
                 <PBtn
                   labelText={item.label}
                   onClick={() => setMenuOpen(false)}
                 />
-              </Link>
+              </LoadingLink>
             ))}
           </>
         )}

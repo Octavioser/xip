@@ -1,6 +1,12 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+import { LoadingLink } from "@/components/common/LoadingLink";
 import { PRODUCTS, toProductImageUrl } from "@/lib/productData";
 import styles from "./page.module.scss";
+
+export const metadata: Metadata = {
+  title: "Shop",
+  description: "XIP shop archive — sold-out collection",
+};
 
 export default function ShopPage() {
   return (
@@ -17,14 +23,14 @@ export default function ShopPage() {
                 alt={p.name}
                 loading="lazy"
               />
-              <Link
+              <LoadingLink
                 href={`/shop/detailproduct/${p.prodCd}`}
                 className={styles.hover}
               >
                 <div className={styles.hoverInner}>
                   <div className={styles.hoverText}>{p.name}</div>
                 </div>
-              </Link>
+              </LoadingLink>
             </div>
           ))}
         </div>

@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { PBtn } from "@/components/common/PBtn";
 import styles from "./page.module.scss";
+
+export const metadata: Metadata = {
+  title: "Credit",
+  description: "XIP contact and credit information",
+};
 
 export default function Credit() {
   return (

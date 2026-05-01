@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { ImgBtn } from "@/components/common/ImgBtn";
+import { LoadingLink } from "@/components/common/LoadingLink";
 import { PBtn } from "@/components/common/PBtn";
+import { useAppContext } from "@/contexts/AppContext";
 import styles from "./MainShopBtn.module.scss";
 
 const LOGO = "/xItem/i/shop/main/shopMainBtn.webp";
@@ -17,6 +18,7 @@ const ITEMS = [
 export function MainShopBtn() {
   const pathname = usePathname();
   const router = useRouter();
+  const { setLoading } = useAppContext();
   const [open, setOpen] = useState(false);
 
   const isShopRoot = pathname === "/shop";
@@ -26,7 +28,7 @@ export function MainShopBtn() {
       setOpen((v) => !v);
       return;
     }
-    // /shop/detailproduct/* 같은 하위 페이지: 뒤로가기 시도, 안 되면 /shop으로
+    setLoading(true);
     const before = window.location.pathname;
     router.back();
     window.setTimeout(() => {
@@ -48,7 +50,7 @@ export function MainShopBtn() {
         {open && isShopRoot && (
           <>
             {ITEMS.map((item) => (
-              <Link
+              <LoadingLink
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
@@ -57,7 +59,7 @@ export function MainShopBtn() {
                   className={`pBtnNoRed ${styles.menuItem}`}
                   labelText={item.label}
                 />
-              </Link>
+              </LoadingLink>
             ))}
           </>
         )}

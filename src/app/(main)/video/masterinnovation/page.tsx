@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import styles from "./page.module.scss";
+
+export const metadata: Metadata = {
+  title: "Master Innovation",
+  description: "XIP — Master Innovation video",
+};
 
 export default function Masterinnovation() {
   return (

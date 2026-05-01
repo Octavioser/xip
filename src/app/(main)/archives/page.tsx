@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { LoadingLink } from "@/components/common/LoadingLink";
 import { PBtn } from "@/components/common/PBtn";
 import styles from "./page.module.scss";
+
+export const metadata: Metadata = {
+  title: "Archives",
+  description: "XIP archive — XhELL, new+ype, fetus, photo works",
+};
 
 const PHOTO_LINKS = [
   { id: "isetanDenimProject", text: "isetan denim project" },
@@ -16,9 +23,9 @@ export default function Archives() {
         <Link href="/archives/xhell">
           <PBtn id="xhell" labelText="XhELL" />
         </Link>
-        <Link href="/archives/gallery/xell">
+        <LoadingLink href="/archives/gallery/xell">
           <PBtn id="xell" labelText="xell" />
-        </Link>
+        </LoadingLink>
         <Link href="/archives/newtype">
           <PBtn id="newtype" labelText="new+ype" />
         </Link>
@@ -26,9 +33,9 @@ export default function Archives() {
           <PBtn id="fetus" labelText="fetus" />
         </Link>
         {PHOTO_LINKS.map((e) => (
-          <Link key={e.id} href={`/archives/gallery/${e.id}`}>
+          <LoadingLink key={e.id} href={`/archives/gallery/${e.id}`}>
             <PBtn id={e.id} labelText={e.text} />
-          </Link>
+          </LoadingLink>
         ))}
       </div>
     </div>

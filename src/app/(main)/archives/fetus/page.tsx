@@ -1,6 +1,12 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+import { LoadingLink } from "@/components/common/LoadingLink";
 import { PBtn } from "@/components/common/PBtn";
 import styles from "./page.module.scss";
+
+export const metadata: Metadata = {
+  title: "fetus",
+  description: "fetus — XIP archive",
+};
 
 const ITEMS = [
   { type: "fetus", label: "fetus" },
@@ -12,9 +18,9 @@ export default function Fetus() {
     <div className={styles.wrap}>
       <div className={styles.linkBox}>
         {ITEMS.map((item) => (
-          <Link key={item.type} href={`/archives/gallery/${item.type}`}>
+          <LoadingLink key={item.type} href={`/archives/gallery/${item.type}`}>
             <PBtn id={item.type} labelText={item.label} />
-          </Link>
+          </LoadingLink>
         ))}
       </div>
     </div>
