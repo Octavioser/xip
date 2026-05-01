@@ -1,0 +1,156 @@
+/* Resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+html {
+  cursor: url("/xItem/i/main/cursor-7.cur"), default;
+}
+
+body {
+  font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
+  color: white;
+  background-color: black;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input::-webkit-inner-spin-button {
+  appearance: none;
+}
+
+a,
+a:link,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Fixed always-on UI bars */
+nav {
+  position: fixed;
+  z-index: 10;
+}
+
+.soundBtn {
+  position: fixed;
+  z-index: 1;
+}
+
+/* PBtn variants — defaults; explicit `style` prop overrides via inline specificity */
+.pBtn,
+.pBtnNoHover,
+.pBtnNoRed {
+  font-size: 55px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+
+  @media (max-width: 767px) {
+    font-size: 2rem;
+  }
+}
+
+.pBtn:hover {
+  transform: scale(1.05);
+  color: red;
+}
+
+.pBtnNoRed:hover {
+  transform: scale(1.05);
+}
+
+/* ImgBtn variants */
+.imgBtn:hover {
+  transform: scale3d(1.05, 1.05, 1.05);
+  background: red;
+}
+
+.imgBtnNoRed:hover {
+  transform: scale3d(1.05, 1.05, 1.05);
+}
+
+/* Layout helpers */
+.logoImage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.youtube {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spermCursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10vw;
+  height: 10vw;
+  background-size: 100%;
+  background-repeat: round;
+  background-image: url("/xItem/i/main/giphy2.gif");
+
+  @media (hover: none), (pointer: coarse) {
+    display: none;
+  }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.beforeStart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  background-size: cover;
+  z-index: 5;
+}
+
+.popUp {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c2c1c1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}

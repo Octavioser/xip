@@ -1,0 +1,23 @@
+.wrap {
+  margin-left: 0.5vw;
+  margin-top: 0.5vh;
+  width: 10vw;
+}
+
+.logo {
+  height: 15vh;
+
+  @media (max-width: 767px) {
+    height: 10vh;
+  }
+}
+
+.logoHome {
+  top: 10vw;
+  left: 10vh;
+}
+
+.logoElsewhere {
+  top: 0;
+  left: 0;
+}

@@ -1,0 +1,41 @@
+.bg {
+  background-image: url("/xItem/i/newtype/background/newtypeBackground.webp");
+  background-size: 130% 100%;
+  height: 100vh;
+  width: 100%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+.entryBox {
+  position: absolute;
+  width: 45vw;
+  height: 45vw;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url("/xItem/i/newtype/main/newtypeMain.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 767px) {
+    width: 80vw;
+    height: 80vw;
+  }
+}
+
+.entryText {
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: "Smooch Sans", sans-serif;
+}

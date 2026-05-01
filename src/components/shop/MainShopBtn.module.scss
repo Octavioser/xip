@@ -1,0 +1,26 @@
+.wrap {
+  position: fixed;
+  left: 1vw;
+  top: 1vw;
+  width: 10%;
+  z-index: 20;
+
+  @media (max-width: 767px) {
+    left: 5vw;
+    top: 4vw;
+  }
+}
+
+.logo {
+  height: 15vh;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.menuItem {
+  font-size: 20px;
+
+  @media (max-width: 767px) {
+    font-size: 1.5rem;
+  }
+}

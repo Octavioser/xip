@@ -1,0 +1,9 @@
+.btn {
+  width: 2vw;
+  right: 20px;
+  bottom: 20px;
+
+  @media (max-width: 767px) {
+    width: 6vw;
+  }
+}

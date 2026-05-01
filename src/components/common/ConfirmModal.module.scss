@@ -1,0 +1,43 @@
+.dialog {
+  border: none;
+  padding: 0;
+  background-color: rgba(255, 0, 0, 0.66);
+  width: 25vw;
+  height: 20vh;
+  color: white;
+
+  @media (max-width: 767px) {
+    width: 90vw;
+  }
+
+  &::backdrop {
+    background-color: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.message {
+  text-align: center;
+  padding-top: 4vh;
+}
+
+.close {
+  font-size: 2rem;
+  position: absolute;
+  top: 2vh;
+  right: 1vw;
+  height: 3vh;
+}
+
+.yes {
+  font-size: 2rem;
+  position: absolute;
+  bottom: 2vh;
+  left: 8vw;
+}
+
+.no {
+  font-size: 2rem;
+  position: absolute;
+  bottom: 2vh;
+  right: 8vw;
+}

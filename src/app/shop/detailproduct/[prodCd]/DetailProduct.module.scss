@@ -1,0 +1,43 @@
+.bg {
+  background-color: white;
+  color: black;
+  min-height: 100vh;
+}
+
+.layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 100vh;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+}
+
+.sliderSide {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 50%;
+  padding-top: 7vh;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    padding-top: 20vh;
+  }
+}
+
+.descSide {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: flex-start;
+  width: 50%;
+  padding-top: 10vh;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    padding-top: 5vh;
+  }
+}

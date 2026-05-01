@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# migration scratch (DB dumps, intermediate artifacts — not for prod)
+/_migration/
+
+# Claude Code local permission cache
+/.claude/
