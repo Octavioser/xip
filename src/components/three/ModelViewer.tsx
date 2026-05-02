@@ -12,7 +12,7 @@ interface ModelViewerProps {
 
 export default function ModelViewer({ modelPath, onReady }: ModelViewerProps) {
   return (
-    <Canvas gl={{ alpha: true }}>
+    <Canvas>
       <ambientLight intensity={-1.5} />
       <directionalLight
         position={[10, 10, 10]}
