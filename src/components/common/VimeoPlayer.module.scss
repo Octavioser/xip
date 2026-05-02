@@ -1,22 +1,20 @@
+// 영상 비율(16:9)에 맞춘 wrap — letterbox/크롭 없이 자연 비율로 표시
+// 모바일 세로에선 영상이 viewport 일부만 차지하고 그 아래 콘텐츠 이어짐
 .wrap {
   position: relative;
   width: 100%;
-  height: 100dvh; // 스크롤 맨 위에서 화면 가득
+  aspect-ratio: 16 / 9;
   background: black;
   color: white;
   overflow: hidden;
 }
 
-// 가로 너비 100% 고정, 세로는 16:9 비율로 자동.
-// 모바일/세로 viewport에선 위·아래에 검정 letterbox 생김 (가로 잘림 방지).
 .iframe {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
   border: none;
-  width: 100vw;
-  height: calc(100vw * 9 / 16);
 }
 
 .controls {
