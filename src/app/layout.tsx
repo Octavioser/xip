@@ -24,39 +24,61 @@ const openSans = Open_Sans({
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://xipred.vercel.app";
 
+const DESCRIPTION = "born from XIP die with XIP.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "XIP",
-    template: "%s | XIP",
+    default: "xip",
+    template: "%s | xip",
   },
-  description: "XIP — visual portfolio + archive",
-  applicationName: "XIP",
-  keywords: ["XIP", "portfolio", "fashion", "archive", "newtype", "xhell"],
+  description: DESCRIPTION,
+  applicationName: "xip",
+  keywords: ["xip", "portfolio", "fashion", "archive", "newtype", "xhell"],
+  icons: {
+    other: [
+      { rel: "mask-icon", url: "/img/safari-pinned-tab.svg", color: "#FF0000" },
+    ],
+  },
   openGraph: {
     type: "website",
-    siteName: "XIP",
-    title: "XIP",
-    description: "XIP — visual portfolio + archive",
+    siteName: "xip",
+    title: "xip",
+    description: DESCRIPTION,
+    url: BASE_URL,
     images: [
       {
-        url: "/xItem/i/newtype/main/newtypeMain.webp",
-        width: 1200,
-        height: 1200,
-        alt: "XIP",
+        url: "/img/logo270.png",
+        width: 270,
+        height: 270,
+        alt: "xip",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "XIP",
-    description: "XIP — visual portfolio + archive",
-    images: ["/xItem/i/newtype/main/newtypeMain.webp"],
+    card: "summary",
+    title: "xip",
+    description: DESCRIPTION,
+    images: ["/img/logo270.png"],
+  },
+  appleWebApp: {
+    title: "xip",
+    statusBarStyle: "black-translucent",
+  },
+  other: {
+    "msapplication-TileColor": "#FF0000",
+    "msapplication-TileImage": "/img/mstile-150x150.png",
   },
   robots: {
     index: true,
     follow: true,
   },
+};
+
+export const viewport = {
+  themeColor: "#FF0000",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
