@@ -21,7 +21,7 @@ html {
 body {
   font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
   color: white;
-  background-color: black;
+  background-color: #ff0000; // theme-color와 일치 — 모바일 toolbar/overscroll 영역도 같은 빨강
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
