@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toProductImageUrl } from "@/lib/productData";
 import styles from "./ProductSlider.module.scss";
 
@@ -29,14 +29,30 @@ export function ProductSlider({ images }: { images: readonly string[] }) {
     return () => observer.disconnect();
   }, [images]);
 
-  const goTo = (idx: number) => {
+  const goTo = useCallback((idx: number) => {
     const slider = sliderRef.current;
     if (!slider) return;
     const slide = slider.querySelector(
       `[data-idx="${idx}"]`,
     ) as HTMLElement | null;
-    slide?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-  };
+    slide?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  }, []);
+
+  const goPrev = useCallback(() => {
+    if (images.length === 0) return;
+    goTo((activeIdx - 1 + images.length) % images.length);
+  }, [activeIdx, images.length, goTo]);
+
+  const goNext = useCallback(() => {
+    if (images.length === 0) return;
+    goTo((activeIdx + 1) % images.length);
+  }, [activeIdx, images.length, goTo]);
+
+  const hasMultiple = images.length > 1;
 
   return (
     <div className={styles.wrap}>
@@ -53,18 +69,36 @@ export function ProductSlider({ images }: { images: readonly string[] }) {
           </div>
         ))}
       </div>
-      {images.length > 1 && (
-        <div className={styles.dots}>
-          {images.map((src, i) => (
-            <button
-              key={src}
-              type="button"
-              className={`${styles.dot} ${i === activeIdx ? styles.dotActive : ""}`}
-              onClick={() => goTo(i)}
-              aria-label={`slide ${i + 1}`}
-            />
-          ))}
-        </div>
+      {hasMultiple && (
+        <>
+          <button
+            type="button"
+            className={`${styles.navBtn} ${styles.prev}`}
+            onClick={goPrev}
+            aria-label="previous"
+          >
+            ◀
+          </button>
+          <button
+            type="button"
+            className={`${styles.navBtn} ${styles.next}`}
+            onClick={goNext}
+            aria-label="next"
+          >
+            ▶
+          </button>
+          <div className={styles.dots}>
+            {images.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                className={`${styles.dot} ${i === activeIdx ? styles.dotActive : ""}`}
+                onClick={() => goTo(i)}
+                aria-label={`slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

@@ -7,11 +7,12 @@ import { GltfModel } from "./GltfModel";
 
 interface ModelViewerProps {
   modelPath: string;
+  onReady?: () => void;
 }
 
-export default function ModelViewer({ modelPath }: ModelViewerProps) {
+export default function ModelViewer({ modelPath, onReady }: ModelViewerProps) {
   return (
-    <Canvas>
+    <Canvas gl={{ alpha: true }}>
       <ambientLight intensity={-1.5} />
       <directionalLight
         position={[10, 10, 10]}
@@ -26,7 +27,7 @@ export default function ModelViewer({ modelPath }: ModelViewerProps) {
         shadow-camera-bottom={-10}
       />
       <Suspense fallback={null}>
-        <GltfModel modelPath={modelPath} />
+        <GltfModel modelPath={modelPath} onReady={onReady} />
       </Suspense>
       <OrbitControls />
     </Canvas>
