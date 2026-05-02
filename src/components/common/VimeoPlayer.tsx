@@ -21,7 +21,7 @@ export function VimeoPlayer({ videoId, title = "video", className }: VimeoPlayer
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playerRef = useRef<Player | null>(null);
   const [paused, setPaused] = useState(false);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(true);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -41,7 +41,15 @@ export function VimeoPlayer({ videoId, title = "video", className }: VimeoPlayer
     });
     player.on("loaded", () => {
       void player.getDuration().then(setDuration);
-      void player.getMuted().then(setMuted);
+      // 자동 unmute 시도 — 데스크톱은 보통 통과, 모바일은 브라우저 차단
+      // 차단되어도 setMuted/getMuted가 실제 상태(true)를 동기화하므로 토글 정상 동작
+      void player
+        .setMuted(false)
+        .then(() => player.getMuted())
+        .then(setMuted)
+        .catch(() => {
+          // 차단된 경우: 음소거 유지, 사용자가 토글로 켜야 함
+        });
     });
 
     return () => {
@@ -73,10 +81,11 @@ export function VimeoPlayer({ videoId, title = "video", className }: VimeoPlayer
     [duration],
   );
 
-  // muted=0: 사운드 ON으로 시도. 단 브라우저 자동재생 정책 때문에
-  // 사이트와 사용자 인터랙션 이력이 부족하면 자동재생 차단됨 → 사용자가 ▶ 클릭해야 재생.
-  // 메뉴 클릭 등 사용자 제스처 직후라면 보통 통과함.
-  const src = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=0&loop=1&autopause=0&controls=0&playsinline=1&dnt=1`;
+  // muted=1: 자동재생 보장 (브라우저 정책상 음소거 영상만 자동재생 가능).
+  // 로드 후 useEffect에서 setMuted(false)로 unmute 시도 →
+  //   데스크톱: 통과 → 사운드 ON
+  //   모바일: 브라우저 차단 → 음소거 유지, 사용자가 "Sound: Off" 탭하면 ON
+  const src = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&autopause=0&controls=0&playsinline=1&dnt=1`;
 
   const fillPct = duration > 0 ? (currentTime / duration) * 100 : 0;
 
