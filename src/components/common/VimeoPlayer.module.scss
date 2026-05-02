@@ -1,0 +1,149 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100dvh; // 스크롤 맨 위에서 화면 가득
+  background: black;
+  color: white;
+  overflow: hidden;
+}
+
+// 16:9 비율 유지하며 viewport를 cover (16:9가 아닌 비율이면 가장자리 잘림)
+.iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+
+  // 세로/16:9보다 좁은 viewport → 높이 기준
+  width: calc(100dvh * 16 / 9);
+  height: 100dvh;
+
+  // 16:9보다 넓은 viewport → 너비 기준
+  @media (min-aspect-ratio: 16/9) {
+    width: 100vw;
+    height: calc(100vw * 9 / 16);
+  }
+}
+
+.controls {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 2;
+  font-family: var(--font-roboto), Arial, sans-serif;
+  user-select: none;
+
+  @media (min-width: 1024px) {
+    left: 2.4rem;
+    right: 2.8rem;
+  }
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    display: block;
+  }
+
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+.slider {
+  position: relative;
+  width: 14rem;
+  height: 0.9rem;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  @media (min-width: 1024px) {
+    width: 9rem;
+  }
+
+  // 좌/우 끝 마감 틱
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+    width: 2px;
+    height: 50%;
+    top: 25%;
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+  }
+}
+
+.track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  margin-top: -0.5px;
+  background: currentColor;
+}
+
+.thumb {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: currentColor;
+  transform: translateX(-1px);
+  pointer-events: none;
+}
+
+.time {
+  font-size: 0.78rem;
+  width: 2.4rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.soundBtn {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem;
+  font-size: 0.85rem;
+
+  &:hover .soundState {
+    opacity: 0.75;
+  }
+}
+
+.soundLabel {
+  font-weight: 400;
+}
+
+.soundState {
+  font-weight: 500;
+  text-decoration: underline;
+}

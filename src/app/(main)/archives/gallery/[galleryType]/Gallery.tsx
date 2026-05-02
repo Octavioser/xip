@@ -7,6 +7,7 @@ import {
   useState,
   type CSSProperties,
 } from "react";
+import { VimeoPlayer } from "@/components/common/VimeoPlayer";
 import {
   GALLERY_COLUMNS,
   GALLERY_IMAGES,
@@ -16,8 +17,7 @@ import {
 } from "@/lib/galleryData";
 import styles from "./Gallery.module.scss";
 
-const VIMEO_XHELL_URL =
-  "https://player.vimeo.com/video/1165179732?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1";
+const VIMEO_XHELL_ID = "1165179732";
 
 const PAGE_SIZE = 20;
 
@@ -92,16 +92,7 @@ export function Gallery({ galleryType }: { galleryType: GalleryType }) {
       <div className={styles.wrap}>
         <div className={styles.inner}>
           {isMovieProject && (
-            <section className={styles.vimeoBox}>
-              <div>
-                <iframe
-                  src={VIMEO_XHELL_URL}
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  title="XhELL"
-                />
-              </div>
-            </section>
+            <VimeoPlayer videoId={VIMEO_XHELL_ID} title="XhELL" />
           )}
           <div className={styles.grid} style={gridStyle}>
             {images.slice(0, visibleCount).map((path, i) => (
